@@ -14,7 +14,7 @@ export default function Navbar() {
           <p className="text-4xl sm:text-7xl font-medium">CStore</p>
         </div>
         <div className="flex gap-5 mx-2">
-          <img src={cartIcon} alt="" className='w-9 md:mr-20' />
+          <img src={cartIcon} alt="" className="w-9 md:mr-20" />
 
           <motion.button
             className="sm:hidden"
@@ -25,24 +25,23 @@ export default function Navbar() {
           >
             <img src={isOpen ? closeIcon : menuIcon} alt="" className="w-10" />
           </motion.button>
-
         </div>
       </div>
       <div className="w-full min-h-15 sm:flex items-center bg-stone-400 hidden">
-         <ul className="text-xl hidden flex-row sm:flex gap-10 md:ml-30">
-            <li className="py-2 pr-2 border-r">
-              <span className="mx-2">Men</span>
-            </li>
-            <li className="py-2 pr-2 border-r">
-              <span className="mx-2">Women</span>
-            </li>
-            <li className="py-2 pr-2 border-r">
-              <span className="mx-2">Footwear</span>
-            </li>
-            <li className="py-2 pr-2 border-r">
-              <span className="mx-2">Accessories</span>
-            </li>
-          </ul>
+        <ul className="text-xl hidden flex-row sm:flex gap-10 md:ml-30">
+          <li className="py-2 pr-2 border-r">
+            <span className="mx-2">Men</span>
+          </li>
+          <li className="py-2 pr-2 border-r">
+            <span className="mx-2">Women</span>
+          </li>
+          <li className="py-2 pr-2 border-r">
+            <span className="mx-2">Footwear</span>
+          </li>
+          <li className="py-2 pr-2 border-r">
+            <span className="mx-2">Accessories</span>
+          </li>
+        </ul>
       </div>
       {isOpen && (
         <motion.div
