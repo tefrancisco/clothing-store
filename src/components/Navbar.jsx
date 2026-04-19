@@ -1,20 +1,52 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import menuIcon from "../assets/menu.svg";
 import closeIcon from "../assets/close.svg";
 import cartIcon from "../assets/cart.svg";
+import Modal from "./Modal";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
+  const modal = useRef();
+
   return (
     <>
+      <Modal ref={modal}>
+        <div className="w-full h-auto bg-stone-400 flex flex-wrap flex-col justify-center">
+          <div className="w-full h-auto flex flex-col">
+            <p className="flex justify-between">
+              <h1 className="mx-2 my-2 text-2xl">Your cart</h1>
+              <form method="dialog" className="mx-2 mt-3">
+                <button>
+                  <img src={closeIcon} className="w-8" />
+                </button>
+              </form>
+            </p>
+            <ul>
+              <li className="w-full flex justify-between py-1 border-b-2 border-stone-500">
+                <span className="mx-2 text-lg">Baseball cap</span>{" "}
+                <p className="mx-2">
+                  <button className="p-1 text-lg rounded-lg">-</button>
+                  <span className="mx-2 text-lg">0</span>
+                  <button className="p-1 text-lg rounded-lg">+</button>
+                </p>
+              </li>
+              
+            </ul>
+            <p className="text-lg mx-2 my-2">Total: </p>
+          </div>
+        </div>
+      </Modal>
+
       <div className="w-full h-28 bg-stone-600 flex justify-between items-center font-[Unbounded]">
         <div className="mx-2 md:ml-30">
           <p className="text-4xl sm:text-7xl font-medium">CStore</p>
         </div>
         <div className="flex gap-5 mx-2">
-          <img src={cartIcon} alt="" className="w-9 md:mr-20" />
+          <button onClick={() => modal.current.open()}>
+            <img src={cartIcon} alt="" className="w-9 md:mr-20" />
+          </button>
 
           <motion.button
             className="sm:hidden"
