@@ -1,28 +1,59 @@
 import { createStore } from "redux";
 
-function cartReducer(state = [], action) {
-  const existingCartItemIndex = state.findIndex(
+function cartReducer(state = {selectedCategory: "men",items: []}, action) {
+
+  let existingCartItemIndex = null;
+
+  if (action.item) {
+    existingCartItemIndex = state.items.findIndex(
     (item) => item.name === action.item.name,
   );
+  }
 
   if (action.type == "add") {
     if (existingCartItemIndex > -1) {
-      state[existingCartItemIndex].quantity++;
+      return {
+        ...state,
+        items: state.items.map((item, index) =>
+          index === existingCartItemIndex
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
+      };
     } else {
-      state.push({ ...action.item, quantity: 1 });
+      return {
+        ...state,
+        items: [...state.items, { ...action.item, quantity: 1 }]
+      };
     }
   } 
   
   else if (action.type == "remove") {
-    if (state[existingCartItemIndex].quantity === 1) {
-        state.splice(existingCartItemIndex, 1);
-    }
-    else {
-        state[existingCartItemIndex].quantity--;
+    if (state.items[existingCartItemIndex].quantity === 1) {
+      return {
+        ...state,
+        items: state.items.filter((_, index) => index !== existingCartItemIndex)
+      };
+    } else {
+      return {
+        ...state,
+        items: state.items.map((item, index) =>
+          index === existingCartItemIndex
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        )
+      };
     }
   }
 
-  return [...state];
+  else if (action.type == "changeCategory") {
+    return {
+      ...state,
+      selectedCategory: action.category
+    };
+  }
+
+  return state;
 }
 
 const store = createStore(cartReducer);

@@ -11,7 +11,8 @@ export default function Navbar() {
 
   const modal = useRef();
 
-  const cart = useSelector(state => state);
+  const cart = useSelector(state => state.items);
+  const selectedCategory = useSelector((state) => state.selectedCategory);
   const dispatch = useDispatch()
 
   function removeItemFromCart(name) {
@@ -38,7 +39,7 @@ export default function Navbar() {
             <p className="flex justify-between">
               <span className="mx-2 my-2 text-2xl">Your cart</span>
                 <button onClick={() => modal.current.close()}>
-                  <img src={closeIcon} className="w-8" />
+                  <img src={closeIcon} className="w-8 hover:cursor-pointer" />
                 </button>
             </p>
             <ul>
@@ -71,7 +72,7 @@ export default function Navbar() {
         </div>
         <div className="flex gap-5 mx-2">
           <button onClick={() => modal.current.open()}>
-            <img src={cartIcon} alt="" className="w-9 md:mr-20" />
+            <img src={cartIcon} alt="" className="w-9 md:mr-20 hover:cursor-pointer" />
           </button>
 
           <motion.button
@@ -87,17 +88,25 @@ export default function Navbar() {
       </div>
       <div className="w-full min-h-15 sm:flex items-center bg-stone-400 hidden">
         <ul className="text-xl hidden flex-row sm:flex gap-10 md:ml-30">
-          <li className="py-2 pr-2 border-r">
-            <span className="mx-2">Men</span>
+          <li className={`py-2 pr-2 border-r hover:cursor-pointer ${selectedCategory === "men" && `text-white border-white`}`}>
+            <span 
+            onClick={() => dispatch({ type: "changeCategory", category: "men" })}
+            className="mx-2">Men</span>
           </li>
-          <li className="py-2 pr-2 border-r">
-            <span className="mx-2">Women</span>
+          <li className={`py-2 pr-2 border-r hover:cursor-pointer ${selectedCategory === "women" && `text-white border-white`}`}>
+            <span 
+            onClick={() => dispatch({ type: "changeCategory", category: "women" })}
+            className="mx-2">Women</span>
           </li>
-          <li className="py-2 pr-2 border-r">
-            <span className="mx-2">Footwear</span>
+          <li className={`py-2 pr-2 border-r hover:cursor-pointer ${selectedCategory === "footwear" && `text-white border-white`}`}>
+            <span 
+            onClick={() => dispatch({ type: "changeCategory", category: "footwear" })}
+            className="mx-2">Footwear</span>
           </li>
-          <li className="py-2 pr-2 border-r">
-            <span className="mx-2">Accessories</span>
+          <li className={`py-2 pr-2 border-r hover:cursor-pointer ${selectedCategory === "accessories" && `text-white border-white`}`}>
+            <span 
+            onClick={() => dispatch({ type: "changeCategory", category: "accessories" })}
+            className="mx-2">Accessories</span>
           </li>
         </ul>
       </div>
@@ -115,16 +124,24 @@ export default function Navbar() {
         >
           <ul className="text-xl">
             <li className="w-full py-2 border-b-2">
-              <span className="mx-2">Men</span>
+              <span 
+              onClick={() => dispatch({ type: "changeCategory", category: "men" })}
+              className="mx-2">Men</span>
             </li>
             <li className="w-full py-2 border-b-2">
-              <span className="mx-2">Women</span>
+              <span 
+              onClick={() => dispatch({ type: "changeCategory", category: "women" })}
+              className="mx-2">Women</span>
             </li>
             <li className="w-full py-2 border-b-2">
-              <span className="mx-2">Footwear</span>
+              <span 
+              onClick={() => dispatch({ type: "changeCategory", category: "footwear" })}
+              className="mx-2">Footwear</span>
             </li>
             <li className="w-full py-2 border-b-2">
-              <span className="mx-2">Accessories</span>
+              <span 
+              onClick={() => dispatch({ type: "changeCategory", category: "accessories" })}
+              className="mx-2">Accessories</span>
             </li>
           </ul>
         </motion.div>

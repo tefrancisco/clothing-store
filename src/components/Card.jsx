@@ -25,7 +25,7 @@ function removeItemFromCart(name) {
   }
 
 
-  const cart = useSelector(state => state);
+  const cart = useSelector(state => state.items);
   const imagePath = `./src/assets/${image}`;
 
   return (
@@ -41,7 +41,7 @@ function removeItemFromCart(name) {
         <div className="flex items-center justify-end">
           <button 
           onClick={() => addItemToCart(title, price)}
-          className="font-mono py-3 px-4 mx-1 border border-stone-800">
+          className="font-mono py-3 px-4 mx-1 border border-stone-800 hover:cursor-pointer">
             Add to cart
           </button>
         </div>
