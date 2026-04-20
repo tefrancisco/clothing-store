@@ -3,6 +3,7 @@ import Card from "./components/Card";
 import {MEN_CLOTHES, WOMEN_CLOTHES, ACCESSORIES, FOOTWEAR} from "./data/DUMMY_CLOTHES";
 
 function App() {
+
   return (
     <>
       <Navbar />

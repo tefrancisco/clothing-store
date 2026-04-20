@@ -1,4 +1,5 @@
 import { useState, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { motion } from "framer-motion";
 import menuIcon from "../assets/menu.svg";
 import closeIcon from "../assets/close.svg";
@@ -10,31 +11,56 @@ export default function Navbar() {
 
   const modal = useRef();
 
+  const cart = useSelector(state => state);
+  const dispatch = useDispatch()
+
+  function removeItemFromCart(name) {
+    dispatch({
+      type: "remove",
+      item: {
+        name: name
+      }
+    })
+  }
+
+  let totalAmount = 0;
+
+  for(let i = 0; i < cart.length; i++)
+  {
+    totalAmount += cart[i].price * cart[i].quantity
+  }
+
   return (
     <>
       <Modal ref={modal}>
-        <div className="w-full h-auto bg-stone-400 flex flex-wrap flex-col justify-center">
+        <div className="w-full h-auto bg-stone-400 flex flex-wrap flex-col justify-center font-[Unbounded]">
           <div className="w-full h-auto flex flex-col">
             <p className="flex justify-between">
-              <h1 className="mx-2 my-2 text-2xl">Your cart</h1>
-              <form method="dialog" className="mx-2 mt-3">
-                <button>
+              <span className="mx-2 my-2 text-2xl">Your cart</span>
+                <button onClick={() => modal.current.close()}>
                   <img src={closeIcon} className="w-8" />
                 </button>
-              </form>
             </p>
             <ul>
-              <li className="w-full flex justify-between py-1 border-b-2 border-stone-500">
-                <span className="mx-2 text-lg">Baseball cap</span>{" "}
-                <p className="mx-2">
-                  <button className="p-1 text-lg rounded-lg">-</button>
-                  <span className="mx-2 text-lg">0</span>
-                  <button className="p-1 text-lg rounded-lg">+</button>
-                </p>
-              </li>
-              
+              {cart.map((item) => (
+                <li key={item.name} className="w-full flex justify-between py-1 border-b-2 border-stone-500 font-mono">
+                  <span className="mx-2 text-lg">{item.name}</span>{" "}
+                  <p className="mx-2">
+                    <button 
+                    onClick={() => removeItemFromCart(item.name)}
+                    className="p-1 text-lg rounded-lg">-</button>
+                    <span className="mx-2 text-lg font-[Unbounded]">{item.quantity}</span>
+                    <button 
+                    onClick={() => dispatch({ type: "add", item: {
+                      name: item.name,
+                      price: item.price
+                    }})}
+                    className="p-1 text-lg rounded-lg">+</button>
+                  </p>
+                </li>
+              ))}
             </ul>
-            <p className="text-lg mx-2 my-2">Total: </p>
+            <p className="text-lg mx-2 my-2 font-mono">Total: $ {totalAmount}.00</p>
           </div>
         </div>
       </Modal>

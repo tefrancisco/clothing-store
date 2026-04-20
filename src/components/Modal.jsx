@@ -8,6 +8,9 @@ export default function Modal({ ref, children }){
         return {
             open() {
                 dialog.current.showModal();
+            },
+            close() {
+                dialog.current.close();
             }
         }
     })

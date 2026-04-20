@@ -1,6 +1,32 @@
+import { useSelector, useDispatch } from "react-redux";
+
 export default function Card({ image, title, price }) {
 
-  const imagePath = `./src/assets/${image}`
+const dispatch = useDispatch();
+
+function addItemToCart(name, price) {
+    dispatch({
+      type: "add",
+      item: {
+        name,
+        price: price
+      },
+    });
+  }
+
+function removeItemFromCart(name) {
+    dispatch({
+      type: "remove",
+      item: {
+        name,
+        price: price
+      }
+    })
+  }
+
+
+  const cart = useSelector(state => state);
+  const imagePath = `./src/assets/${image}`;
 
   return (
     <div className="flex flex-col w-89 h-110 my-10">
@@ -13,7 +39,9 @@ export default function Card({ image, title, price }) {
           <p>{`$ ${price} USD`}</p>
         </div>
         <div className="flex items-center justify-end">
-          <button className="font-mono py-3 px-4 mx-1 border border-stone-800">
+          <button 
+          onClick={() => addItemToCart(title, price)}
+          className="font-mono py-3 px-4 mx-1 border border-stone-800">
             Add to cart
           </button>
         </div>
